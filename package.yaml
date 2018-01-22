@@ -1,0 +1,55 @@
+name:                cautious-sniffle
+version:             0.1.0.0
+github:              "fishyfrogface/cautious-sniffle"
+license:             BSD3
+author:              "Camilla Rygh"
+maintainer:          "example@example.com"
+copyright:           "2018 Camilla Rygh"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Game
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on Github at <https://github.com/fishyfrogface/cautious-sniffle#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- lambdacube-gl >= 0.5 && < 1
+- vector >= 0.11 && < 1
+- GLFW-b >= 1.4 && < 2
+- aeson >= 0.11 && < 1
+- containers >= 0.5 && < 1
+- JuicyPixels >= 3.2 && < 4
+- bytestring >= 0.10 && < 1
+
+library:
+  source-dirs: src
+
+executables:
+  cautious-sniffle-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - cautious-sniffle
+
+tests:
+  cautious-sniffle-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - cautious-sniffle

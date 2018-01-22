@@ -1,0 +1,11 @@
+flags: {}
+packages:
+- .
+extra-deps:
+- GLFW-0.5.2.5
+- aeson-0.11.3.0
+- lambdacube-gl-0.5.2.4
+- lambdacube-ir-0.3.0.1
+- primitive-0.6.1.0
+- vector-0.11.0.0
+resolver: lts-9.21
