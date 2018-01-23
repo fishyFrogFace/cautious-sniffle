@@ -5,8 +5,6 @@ module Lib
     ) where
 
 import "GLFW-b" Graphics.UI.GLFW as GLFW
-import qualified Data.Map as Map
-import qualified Data.Vector as V
 
 import LambdaCube.GL as LambdaCubeGL -- renderer
 import LambdaCube.GL.Mesh as LambdaCubeGL
@@ -16,15 +14,13 @@ import Codec.Picture as Juicy
 import Data.Aeson
 import qualified Data.ByteString as SB
 
-----------------------------------------------------
---  See:  http://lambdacube3d.com/getting-started
-----------------------------------------------------
+import Geometry
 
 begin :: IO ()
 begin = do
     Just pipelineDesc <- decodeStrict <$> SB.readFile "hello.json"
 
-    win <- initWindow "LambdaCube 3D DSL Hello World" 640 640
+    win <- initWindow "My lovely little game" 640 640
 
     -- setup render data
     let inputSchema = makeSchema $ do
@@ -38,8 +34,8 @@ begin = do
     storage <- LambdaCubeGL.allocStorage inputSchema
 
     -- upload geometry to GPU and add to pipeline input
-    LambdaCubeGL.uploadMeshToGPU triangleA >>= LambdaCubeGL.addMeshToObjectArray storage "objects" []
-    LambdaCubeGL.uploadMeshToGPU triangleB >>= LambdaCubeGL.addMeshToObjectArray storage "objects" []
+    LambdaCubeGL.uploadMeshToGPU (triangleA A_V2F V2) >>= LambdaCubeGL.addMeshToObjectArray storage "objects" []
+    LambdaCubeGL.uploadMeshToGPU (triangleB A_V2F V2) >>= LambdaCubeGL.addMeshToObjectArray storage "objects" []
 
     -- load image and upload texture
     Right img <- Juicy.readImage "logo.png"
@@ -71,25 +67,6 @@ begin = do
     LambdaCubeGL.disposeStorage storage
     GLFW.destroyWindow win
     GLFW.terminate
-
--- geometry data: triangles
-triangleA :: LambdaCubeGL.Mesh
-triangleA = Mesh
-    { mAttributes   = Map.fromList
-        [ ("position",  A_V2F $ V.fromList [V2 1 1, V2 1 (-1), V2 (-1) (-1)])
-        , ("uv",        A_V2F $ V.fromList [V2 1 1, V2 0 1, V2 0 0])
-        ]
-    , mPrimitive    = P_Triangles
-    }
-
-triangleB :: LambdaCubeGL.Mesh
-triangleB = Mesh
-    { mAttributes   = Map.fromList
-        [ ("position",  A_V2F $ V.fromList [V2 1 1, V2 (-1) (-1), V2 (-1) 1])
-        , ("uv",        A_V2F $ V.fromList [V2 1 1, V2 0 0, V2 1 0])
-        ]
-    , mPrimitive    = P_Triangles
-    }
 
 initWindow :: String -> Int -> Int -> IO Window
 initWindow title width height = do
