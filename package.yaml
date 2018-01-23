@@ -22,6 +22,7 @@ description:         Please see the README on Github at <https://github.com/fish
 dependencies:
 - base >= 4.7 && < 5
 - lambdacube-gl >= 0.5 && < 1
+- lambdacube-compiler >= 0.6 && < 1
 - vector >= 0.11 && < 1
 - GLFW-b >= 1.4 && < 2
 - aeson >= 0.11 && < 1

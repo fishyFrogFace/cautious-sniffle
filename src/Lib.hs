@@ -8,6 +8,7 @@ import "GLFW-b" Graphics.UI.GLFW as GLFW
 
 import LambdaCube.GL as LambdaCubeGL -- renderer
 import LambdaCube.GL.Mesh as LambdaCubeGL
+import LambdaCube.Compiler as LambdaCube
 
 import Codec.Picture as Juicy
 
@@ -18,7 +19,11 @@ import Geometry
 
 begin :: IO ()
 begin = do
-    Just pipelineDesc <- decodeStrict <$> SB.readFile "hello.json"
+    
+    --compile the .lc to graphics pipeline description
+    pipelineDesc <- LambdaCube.compileMain ["."] OpenGL33 "hello.lc" >>= \case
+        Left err -> fail $ "compile error:\n" ++ ppShow err
+        Right pd -> return pd
 
     win <- initWindow "My lovely little game" 640 640
 
