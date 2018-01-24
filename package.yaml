@@ -29,6 +29,9 @@ dependencies:
 - containers >= 0.5 && < 1
 - JuicyPixels >= 3.2 && < 4
 - bytestring >= 0.10 && < 1
+- text >= 1.2 && < 2
+- wavefront >= 0.7 && < 1
+- mtl >= 2.2 && < 3
 
 library:
   source-dirs: src
